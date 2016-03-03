@@ -1,0 +1,43 @@
+#container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border: 2px solid red; }
+  #container #box {
+    position: absolute;
+    background: #000;
+    top: 140px;
+    left: 30%;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px; }
+  #container .tower {
+    width: 180px;
+    height: 180px;
+    margin: 50px 50px;
+    border-radius: 50%;
+    background: blue; }
+    #container .tower .bullet {
+      width: 16px;
+      height: 16px;
+      background-color: green;
+      border-radius: 50%;
+      position: absolute;
+      margin-left: calc(90px - 8px);
+      margin-top: calc(90px - 8px); }
+
+/*
+* Second test
+*/
+.tower {
+  width: 70px;
+  height: 70px;
+  background: red;
+  position: relative; }
+  .tower .missile {
+    width: 20px;
+    height: 20px;
+    background: blue;
+    position: absolute;
+    top: 25px;
+    left: 25px; }
