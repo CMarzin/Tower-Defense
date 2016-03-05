@@ -5,16 +5,23 @@ var container = $('#container'),
     wv = container.height() - box.height(),
     d = {},
     x = 5,
+    bullet = $('.bullet').offset(),
     tower = $(".tower").offset(),
+    wbullet = 16,
+    hbullet = 16,
     wtower = $(".tower").width(),
     htower = $(".tower").height(),
     wbox = $("#box").width(),
     hbox = $("#box").height(),
     towerX = tower.left + wtower / 2,
     towerY = tower.top + htower / 2,
+    radiusBullet = wbullet / 2;
     radiusBox = wbox / 2,
-    radiustower = wtower / 2,
+    radiustower = wtower / 2;
     hit = false;
+
+
+
 
 var deplacement_balle = {
     x: 0,
@@ -67,6 +74,29 @@ function update() {
     boxY = boxOffset.top + hbox / 2;
 
 
+    if(hit === true){
+      console.log('check pos balle');
+      var bulletOffset = $('.bullet').offset();
+      var bulletX = bulletOffset.left + wbullet / 2;
+      var bulletY = bulletOffset.top + hbullet / 2;
+      /*
+      *Hitbox bullet
+      */
+
+      var dx_bullet = boxX - bulletX;
+      var dy_bullet = boxY - bulletY;
+      var distance = Math.sqrt(dx_bullet * dx_bullet + dy_bullet * dy_bullet);
+
+      if (distance < radiusBox + radiusBullet) {
+        $('.bullet').last().remove();
+      } else {
+        //  $("#box").css("background", "black");
+      }
+    } else {
+      console.log('fais rien')
+    }
+
+
     $(".bullet").each(function () {
 
         var torpille = bullets[bullets.length - 1];
@@ -88,7 +118,6 @@ function update() {
         }
 
 
-
     });
 }
 setInterval(update, 200);
@@ -101,6 +130,7 @@ var Tower = {
 
     },
     shoot: function () {
+      hit = true;
         $(".tower").append($("<div>").addClass("bullet").css({
             "left": 0,
             "top": 0,
@@ -116,36 +146,19 @@ var Tower = {
         bullets.push(last_bullet);
         console.log('tir');
 
-        /*
-        *Hitbox bullet
-        */
-        var bulletOffset = $('.bullet').offset(),
-            wbullet = $('.bullet').width(),
-            hbullet = $('.bullet').height(),
-            bulletX = bulletOffset.left + wbullet / 2,
-            bulletY = bulletOffset.top + hbullet / 2,
-            radiusBullet = wbullet / 2;
 
 
-        var dx = boxX - bulletX,
-            dy = boxY - bulletY,
-            distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < radiusBox + radiusBullet) {
-            console.log('touché ennemi');
-        } else {
-          //  $("#box").css("background", "black");
-        }
+
     },
     hitbox: function () {
 
         /*
         *Hitbox range
         */
-      var hit = true,
-          boxOffset = $("#box").offset(),
-          boxX = boxOffset.left + wbox / 2,
-          boxY = boxOffset.top + hbox / 2;
+        var boxOffset = $("#box").offset(),
+            boxX = boxOffset.left + wbox / 2,
+            boxY = boxOffset.top + hbox / 2;
 
         var dx = boxX - towerX,
             dy = boxY - towerY,
